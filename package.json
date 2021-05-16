@@ -1,0 +1,22 @@
+{
+  "name": "arbitrage-uniswap-sushiswap",
+  "version": "1.0.0",
+  "description": "Arbitrage between Uniswap v2 and Sushiswap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolarteh/arbitrage-uniswap-sushiswap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tolarteh/arbitrage-uniswap-sushiswap/issues"
+  },
+  "homepage": "https://github.com/tolarteh/arbitrage-uniswap-sushiswap#readme",
+  "dependencies": {
+    "ethers": "^5.1.4"
+  }
+}
