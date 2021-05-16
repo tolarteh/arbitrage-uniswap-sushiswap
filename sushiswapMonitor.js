@@ -11,6 +11,9 @@ const provider = new ethers.providers.JsonRpcProvider("https://mainnet.infura.io
 // uniswap pair address 0xc465c0a16228ef6fe1bf29c04fdb04bb797fd537
 const uniswapSDTETHExchange = "0xc465c0a16228ef6fe1bf29c04fdb04bb797fd537";
  
+const sushiswapSDTETHExchange = "0x22def8cf4e481417cb014d9dc64975ba12e3a184"
+
+
 // sushiswap pair address
 const uniswapUsdtWethExchange = "0x22def8cf4e481417cb014d9dc64975ba12e3a184";
 
@@ -60,13 +63,21 @@ function convertSwapEventToPrice({ swapArgs, token0Decimals, token1Decimals }) {
 }
 
 const uniswapContract = new ethers.Contract(
-  uniswapUsdtWethExchange,
+  uniswapSDTETHExchange,
   uniswapAbi,
   provider
 );
-const filter = uniswapContract.filters.Swap();
 
-uniswapContract.on(filter, (from, a0in, a0out, a1in, a1out, to, event) => {
+const sushiswapContract = new ethers.Contract(
+  sushiswapSDTETHExchange,
+  uniswapAbi,
+  provider
+);
+
+const filterUniswap = uniswapContract.filters.Swap();
+const filterSushiswap = sushiswapContract.filters.Swap();
+
+uniswapContract.on(filterUniswap, (from, a0in, a0out, a1in, a1out, to, event) => {
   const { price, volume } = convertSwapEventToPrice({
     swapArgs: event.args,
     // the USDC ERC20 uses 6 decimals
@@ -74,5 +85,16 @@ uniswapContract.on(filter, (from, a0in, a0out, a1in, a1out, to, event) => {
     // the WETH ERC20 uses 18 decimals
     token1Decimals: 18,
   });
-  console.log({ price, volume });
+  console.log("uniswap",{ price, volume });
+});
+
+sushiswapContract.on(filterSushiswap, (from, a0in, a0out, a1in, a1out, to, event) => {
+  const { price, volume } = convertSwapEventToPrice({
+    swapArgs: event.args,
+    // the USDC ERC20 uses 6 decimals
+    token0Decimals: 6,
+    // the WETH ERC20 uses 18 decimals
+    token1Decimals: 18,
+  });
+  console.log("sushiswap", { price, volume });
 });
