@@ -91,8 +91,8 @@ uniswapContract.on(filterUniswap, (from, a0in, a0out, a1in, a1out, to, event) =>
 sushiswapContract.on(filterSushiswap, (from, a0in, a0out, a1in, a1out, to, event) => {
   const { price, volume } = convertSwapEventToPrice({
     swapArgs: event.args,
-    // the USDC ERC20 uses 6 decimals
-    token0Decimals: 6,
+    // the SDT ERC20 uses 6 decimals
+    token0Decimals: 18,
     // the WETH ERC20 uses 18 decimals
     token1Decimals: 18,
   });
