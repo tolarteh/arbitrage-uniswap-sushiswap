@@ -2,9 +2,11 @@ from dotenv import dotenv_values
 from web3 import Web3
 
 config = dotenv_values(".env")
+
 w3 = Web3(Web3.HTTPProvider(config["PROVIDER"]))
 print("Connection =", w3.isConnected())
 # token, amount_token, min_token, min_eth, to, deadline
+
 
 def send_transaction(func, params):
   tx = func.buildTransaction(params)
